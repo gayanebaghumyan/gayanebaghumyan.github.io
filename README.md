@@ -4,7 +4,7 @@ This project contains Gayane Baghumyan's personal academic website, prepared for
 
 ## Replacing the files
 
-The repository currently contains empty placeholder files. Replace them with the real files at these exact paths and keep the filenames unchanged:
+To update the public documents or portrait, replace the files at these exact paths and keep the filenames unchanged:
 
 - Put the CV at `cv.pdf`.
 - Put the portrait at `assets/headshot.jpg`.
@@ -22,7 +22,6 @@ Open `index.html` and search for these HTML comment markers:
 
 - `site name` marks the name in the header and profile; update both occurrences together.
 - `biography` surrounds the introductory paragraphs.
-- `research visits` surrounds the University of Chicago and Princeton visit paragraph.
 - `job market line` surrounds the paragraph to remove after the market.
 - `profile details` surrounds the sidebar affiliation, email, and LinkedIn links.
 - `paper 1`, `paper 2`, and `paper 3` surround each paper's title, links, abstract, and any paper-specific details.
