@@ -1,0 +1,13 @@
+*
+!/.gitignore
+!/.nojekyll
+!/README.md
+!/index.html
+!/cv.html
+!/style.css
+!/script.js
+!/cv.pdf
+!/assets/
+!/assets/headshot.png
+!/assets/papers/
+!/assets/papers/ambiguity_and_racial_discrimination.pdf
