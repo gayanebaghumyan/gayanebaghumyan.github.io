@@ -7,7 +7,7 @@ This project contains Gayane Baghumyan's personal academic website, prepared for
 To update the public documents or portrait, replace the files at these exact paths and keep the filenames unchanged:
 
 - Put the CV at `cv.pdf`.
-- Put the portrait at `assets/headshot.jpg`.
+- Put the portrait at `assets/headshot.png` (a PNG image).
 - Put *Ambiguity and Racial Discrimination* at `assets/papers/ambiguity_and_racial_discrimination.pdf`.
 
 No HTML changes are needed when those names stay the same. The second paper remains linked to SSRN and does not need a local PDF. The third paper currently displays “Draft available on request” and has no public PDF.
@@ -40,4 +40,3 @@ The light/dark switch is CSS-only. Dark mode is the default because the `theme-t
 ## Deployment
 
 Name the public repository exactly `gayanebaghumyan.github.io`. In **Settings → Pages**, set **Source** to **Deploy from a branch**, choose the `main` branch, and select `/ (root)` as the folder. The first deployment takes a few minutes.
-
