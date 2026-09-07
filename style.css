@@ -180,7 +180,8 @@ nav a:hover {
 
 section,
 #content,
-#research {
+#research,
+#teaching {
   scroll-margin-top: 88px;
 }
 
@@ -395,9 +396,15 @@ h1 {
   margin-bottom: 0;
 }
 
-.research {
+.research,
+.teaching {
   padding-top: clamp(34px, 4vw, 50px);
   border-top: 1px solid var(--rule);
+}
+
+.teaching {
+  margin-top: clamp(34px, 4vw, 50px);
+  padding-bottom: 8px;
 }
 
 h2 {
@@ -480,6 +487,67 @@ h3 {
   color: var(--ink-soft);
 }
 
+.teaching-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--rule);
+}
+
+.teaching-entry {
+  padding: 26px 28px 28px 0;
+  border-top: 0;
+}
+
+.teaching-entry:first-child {
+  grid-column: 1 / -1;
+  padding-right: 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.teaching-entry:nth-child(3) {
+  padding-right: 0;
+  padding-left: 28px;
+  border-left: 1px solid var(--rule);
+}
+
+.teaching-level {
+  margin-bottom: 8px;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.teaching-meta {
+  margin-bottom: 15px;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.teaching-topics {
+  margin-bottom: 0;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.68;
+}
+
+.teaching-topics strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.teaching-evaluations {
+  margin: 8px 0 20px;
+  padding: 14px 0 14px 16px;
+  border-left: 2px solid var(--accent);
+  color: var(--ink-soft);
+}
+
+.teaching-evaluations a {
+  color: var(--ink);
+}
+
 .site-footer {
   padding-block: 26px 34px;
   border-top: 1px solid var(--rule);
@@ -542,7 +610,8 @@ h3 {
 
   section,
   #content,
-  #research {
+  #research,
+  #teaching {
     scroll-margin-top: 76px;
   }
 
@@ -596,6 +665,23 @@ h3 {
   .cv-frame {
     height: 72vh;
     min-height: 520px;
+  }
+
+  .teaching-list {
+    grid-template-columns: 1fr;
+  }
+
+  .teaching-entry,
+  .teaching-entry:first-child,
+  .teaching-entry:nth-child(3) {
+    grid-column: auto;
+    padding: 24px 0 27px;
+    border-left: 0;
+    border-bottom: 0;
+  }
+
+  .teaching-entry + .teaching-entry {
+    border-top: 1px solid var(--rule);
   }
 }
 
