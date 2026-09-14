@@ -567,6 +567,31 @@ h3 {
   margin: 0;
 }
 
+.address-copy {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: copy;
+}
+
+.address-copy:hover {
+  color: var(--ink);
+}
+
+.address-copy:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.address-feedback {
+  margin-left: 0.4em;
+  color: var(--ink);
+  font-weight: 600;
+}
+
 @media (max-width: 900px) {
   .profile-layout {
     grid-template-columns: 200px minmax(0, 1fr);
