@@ -1,5 +1,13 @@
 :root {
-  color-scheme: dark light;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="light"] body {
+  background: #fdfbf9;
 }
 
 *,
@@ -37,7 +45,7 @@ body {
   color: var(--ink);
 }
 
-.site-shell:has(#theme-toggle:not(:checked)) {
+:root[data-theme="light"] .site-shell {
   --bg: #fdfbf9;
   --surface: #f4efec;
   --ink: #343236;
@@ -227,7 +235,7 @@ section,
   font-size: 0;
 }
 
-.site-shell:has(#theme-toggle:not(:checked)) .portrait-wrap img {
+:root[data-theme="light"] .portrait-wrap img {
   box-shadow: 0 0 0 1px rgba(52, 50, 54, 0.2);
 }
 
