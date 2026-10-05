@@ -1,6 +1,5 @@
 (() => {
   const pageName = document.body.dataset.analyticsPage;
-  const pageTitle = pageName === "cv" ? "CV" : "Home";
   const library = document.querySelector("script[data-goatcounter]");
   if (!pageName || !library) return;
 
@@ -47,87 +46,74 @@
     if (started || document.visibilityState !== "visible") return;
     started = true;
     pending.unshift({ path: "/site-visit", title: "Site visitor", event: false });
-    record(`page-${pageName}`, `Page · ${pageTitle}`);
+    flush();
   }
   library.addEventListener("load", flush);
   startVisit();
 
+  const clickTitles = {
+    "click-research": "Clicked Research",
+    "click-teaching": "Clicked Teaching",
+    "click-cv": "Clicked CV",
+    "download-cv": "CV download clicked"
+  };
   function trackClick(event) {
     if (event.type === "auxclick" && event.button !== 1) return;
     const element = event.target.closest?.("[data-analytics-click]");
-    if (!element) return;
-    record(element.dataset.analyticsClick, element.dataset.analyticsTitle, true);
+    const path = element?.dataset.analyticsClick;
+    if (!Object.hasOwn(clickTitles, path)) return;
+    record(path, clickTitles[path], true);
   }
   document.addEventListener("click", trackClick);
   document.addEventListener("auxclick", trackClick);
-  document.querySelector("#theme-toggle")?.addEventListener("change", (event) => {
-    const theme = event.target.checked ? "dark" : "light";
-    record(`theme-${theme}`, `Theme · Switched to ${theme}`, true);
-  });
 
-  // Reaching a heading for two seconds is distinct from clicking a menu link.
-  const headings = new Map();
-  function updateHeading(element) {
-    const state = headings.get(element);
-    if (state.timer) { clearTimeout(state.timer); state.timer = null; }
-    if (state.sent || !state.visible || document.visibilityState !== "visible") return;
-    state.timer = setTimeout(() => {
-      state.timer = null;
-      if (!state.visible || document.visibilityState !== "visible") return;
-      state.sent = true;
-      record(`reached-${element.dataset.analyticsSection}`,
-        `Reached · ${element.dataset.analyticsTitle}`);
-    }, 2000);
-  }
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        const state = headings.get(entry.target);
-        state.visible = entry.isIntersecting && entry.intersectionRatio >= 0.5;
-        updateHeading(entry.target);
-      }
-    }, { threshold: 0.5, rootMargin: "-80px 0px 0px 0px" });
-    document.querySelectorAll("[data-analytics-section]").forEach((element) => {
-      headings.set(element, { visible: false, sent: false, timer: null });
-      observer.observe(element);
-    });
-  }
-
-  // Anonymous per-tab totals survive navigation; no visitor identifier is added.
-  const timeKey = "site-viewing-time";
+  // One anonymous total per tab, shared by Home and CV. No visitor ID is added.
+  const timeKey = "site-viewing-time-v2";
   const expiry = 30 * 60 * 1000;
-  let viewingTime = { home: 0, cv: 0 };
-  try {
-    const saved = JSON.parse(sessionStorage.getItem(timeKey));
-    if (saved && Date.now() - saved.updated < expiry) {
-      for (const name of ["home", "cv"]) {
-        if (Number.isFinite(saved[name]) && saved[name] >= 0) viewingTime[name] = saved[name];
+  const milestones = [15, 30];
+  let secondsOnSite = 0;
+  let lastActiveAt = Date.now();
+  let reachedTimes = new Set();
+  function restoreTime() {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(timeKey));
+      if (saved && Number.isFinite(saved.seconds) && saved.seconds >= 0 &&
+          Number.isFinite(saved.updated) && Date.now() - saved.updated < expiry) {
+        secondsOnSite = saved.seconds;
+        lastActiveAt = saved.updated;
       }
-    }
-  } catch {
-    // Measurements still work for this page without browser storage.
+    } catch { /* Measurements still work without browser storage. */ }
+    resetIfIdle();
+    reachedTimes = new Set(milestones.filter(seconds => secondsOnSite >= seconds));
   }
-  const milestones = [15, 30, 60, 120, 300];
-  const reachedTimes = new Set(milestones.filter(seconds => viewingTime[pageName] >= seconds));
+  function resetIfIdle() {
+    if (Date.now() - lastActiveAt >= expiry) {
+      secondsOnSite = 0;
+      reachedTimes.clear();
+      lastActiveAt = Date.now();
+    }
+  }
+  restoreTime();
   let visible = document.visibilityState === "visible";
   let lastTick = performance.now();
   let timer;
 
   function saveTime() {
     try {
-      sessionStorage.setItem(timeKey, JSON.stringify({ ...viewingTime, updated: Date.now() }));
+      sessionStorage.setItem(timeKey, JSON.stringify({ seconds: secondsOnSite, updated: lastActiveAt }));
     } catch { /* Storage is optional. */ }
   }
   function tick() {
     const now = performance.now();
     if (visible) {
+      resetIfIdle();
       // Discard long clock gaps caused by sleep or suspended browser processes.
-      viewingTime[pageName] += Math.min(Math.max(now - lastTick, 0), 2000) / 1000;
+      secondsOnSite += Math.min(Math.max(now - lastTick, 0), 2000) / 1000;
+      lastActiveAt = Date.now();
       for (const seconds of milestones) {
-        if (viewingTime[pageName] < seconds || reachedTimes.has(seconds)) continue;
+        if (secondsOnSite < seconds || reachedTimes.has(seconds)) continue;
         reachedTimes.add(seconds);
-        const label = seconds < 60 ? `${seconds} seconds` : `${seconds / 60} minute${seconds > 60 ? "s" : ""}`;
-        record(`time-${pageName}-${seconds}s`, `Time · ${pageTitle} ≥ ${label}`);
+        record(`time-site-${seconds}s`, `Time on website ≥ ${seconds} seconds`);
       }
       saveTime();
     }
@@ -140,23 +126,24 @@
   document.addEventListener("visibilitychange", () => {
     tick();
     visible = document.visibilityState === "visible";
+    if (visible) resetIfIdle();
     startVisit();
     runTimer();
-    headings.forEach((_, element) => updateHeading(element));
   });
   window.addEventListener("pagehide", () => {
     tick();
     visible = false;
     clearInterval(timer);
     saveTime();
-    headings.forEach((_, element) => updateHeading(element));
     flush();
   });
   window.addEventListener("pageshow", () => {
+    // Refresh the shared total after Back/Forward restores a cached page.
+    restoreTime();
     lastTick = performance.now();
     visible = document.visibilityState === "visible";
     runTimer();
-    headings.forEach((_, element) => updateHeading(element));
+    startVisit();
   });
   runTimer();
 })();
