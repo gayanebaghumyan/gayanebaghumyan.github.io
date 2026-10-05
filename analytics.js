@@ -55,7 +55,8 @@
     "click-research": "Clicked Research",
     "click-teaching": "Clicked Teaching",
     "click-cv": "Clicked CV",
-    "download-cv": "CV download clicked"
+    "download-cv": "CV download clicked",
+    "click-paper-jmp": "Clicked JMP"
   };
   function trackClick(event) {
     if (event.type === "auxclick" && event.button !== 1) return;
