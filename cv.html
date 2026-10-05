@@ -11,20 +11,21 @@
   <script src="theme.js?v=1"></script>
   <link rel="stylesheet" href="style.css?v=6">
   <script src="script.js?v=2" defer></script>
+  <script src="analytics.js?v=1" defer></script>
 </head>
-<body>
+<body data-analytics-page="cv">
   <a class="skip-link" href="#content">Skip to content</a>
 
   <div class="site-shell cv-page">
     <header class="site-header">
       <div class="header-inner">
-        <a class="header-name" href="index.html" aria-label="Gayane Baghumyan — home">Gayane Baghumyan</a>
+        <a class="header-name" href="index.html" aria-label="Gayane Baghumyan — home" data-analytics-click="click-home" data-analytics-title="Clicks · Home">Gayane Baghumyan</a>
 
         <div class="header-actions">
           <nav aria-label="Primary navigation">
-            <a href="index.html#research">Research</a>
-            <a href="index.html#teaching">Teaching</a>
-            <a href="cv.html" aria-current="page">CV</a>
+            <a href="index.html#research" data-analytics-click="click-research" data-analytics-title="Clicks · Research">Research</a>
+            <a href="index.html#teaching" data-analytics-click="click-teaching" data-analytics-title="Clicks · Teaching">Teaching</a>
+            <a href="cv.html" aria-current="page" data-analytics-click="click-cv" data-analytics-title="Clicks · CV">CV</a>
           </nav>
 
           <label class="theme-toggle" title="Toggle light and dark mode">
@@ -63,7 +64,7 @@
                   <path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"></path>
                 </svg>
               </span>
-              <a href="https://www.cerge-ei.cz/about/cerge-ei" target="_blank" rel="noopener">CERGE-EI</a>
+              <a href="https://www.cerge-ei.cz/about/cerge-ei" target="_blank" rel="noopener" data-analytics-click="click-cerge-ei" data-analytics-title="Clicks · CERGE-EI">CERGE-EI</a>
             </p>
             <div class="profile-detail">
               <span class="detail-icon" aria-hidden="true">
@@ -72,24 +73,24 @@
                   <path d="m4 7 8 6 8-6"></path>
                 </svg>
               </span>
-              <button class="email-copy" type="button" data-email="baghumyangayane@gmail.com" aria-describedby="email-tooltip">
+              <button class="email-copy" type="button" data-email="baghumyangayane@gmail.com" aria-describedby="email-tooltip" data-analytics-click="click-email" data-analytics-title="Clicks · Copy email">
                 Email
                 <span class="email-tooltip" id="email-tooltip" role="status">baghumyangayane@gmail.com</span>
               </button>
             </div>
             <p class="profile-detail">
               <span class="detail-mark" aria-hidden="true">in</span>
-              <a href="https://www.linkedin.com/in/gayane-baghumyan/" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="https://www.linkedin.com/in/gayane-baghumyan/" target="_blank" rel="noopener" data-analytics-click="click-linkedin" data-analytics-title="Clicks · LinkedIn">LinkedIn</a>
             </p>
           </div>
         </aside>
 
         <div class="main-column">
           <section class="cv-section" aria-labelledby="page-title">
-            <h1 id="page-title">CV</h1>
+            <h1 id="page-title" data-analytics-section="cv" data-analytics-title="CV">CV</h1>
             <object class="cv-frame" data="cv.pdf#view=FitH&amp;toolbar=1&amp;navpanes=0" type="application/pdf" aria-label="Gayane Baghumyan curriculum vitae">
               <div class="cv-fallback">
-                <p>Your browser could not display the CV preview. <a href="cv.pdf" target="_blank" rel="noopener">Open the CV in a new tab.</a></p>
+                <p>Your browser could not display the CV preview. <a href="cv.pdf" target="_blank" rel="noopener" data-analytics-click="click-cv-pdf" data-analytics-title="Clicks · CV PDF">Open the CV in a new tab.</a></p>
               </div>
             </object>
           </section>
@@ -100,14 +101,14 @@
     <footer class="site-footer">
       <p>
         Gayane Baghumyan ·
-        <button class="address-copy" type="button" data-address="Politických vězňů 7, 110 00 Prague 1, Czech Republic" title="Copy address">
+        <button class="address-copy" type="button" data-address="Politických vězňů 7, 110 00 Prague 1, Czech Republic" title="Copy address" data-analytics-click="click-address" data-analytics-title="Clicks · Copy address">
           Politických vězňů 7, 110 00 Prague 1, Czech Republic
         </button>
         <span class="address-feedback" aria-live="polite"></span>
       </p>
     </footer>
   </div>
-  <script data-goatcounter="https://gayanebaghumyan.goatcounter.com/count" data-goatcounter-settings='{"path": "/site-visit", "title": "Site visitor"}' async src="https://gc.zgo.at/count.js"></script>
+  <script data-goatcounter="https://gayanebaghumyan.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true, "path": "/site-visit", "title": "Site visitor"}' async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
 
