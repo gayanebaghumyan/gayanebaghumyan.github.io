@@ -68,10 +68,16 @@
   document.addEventListener("click", trackClick);
   document.addEventListener("auxclick", trackClick);
 
+  document.addEventListener("change", (event) => {
+    if (event.target.id === "theme-toggle") {
+      record("click-theme-toggle", "Clicked light/dark mode", true);
+    }
+  });
+
   // One anonymous total per tab, shared by Home and CV. No visitor ID is added.
   const timeKey = "site-viewing-time-v2";
   const expiry = 30 * 60 * 1000;
-  const milestones = [15, 30];
+  const milestones = [30];
   let secondsOnSite = 0;
   let lastActiveAt = Date.now();
   let reachedTimes = new Set();
