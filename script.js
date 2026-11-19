@@ -47,7 +47,9 @@ if (emailButton && emailTooltip) {
 
 document.querySelectorAll(".address-copy").forEach((addressButton) => {
   const address = addressButton.dataset.address;
-  const feedback = addressButton.nextElementSibling;
+  const tooltip = addressButton.querySelector(".address-tooltip");
+  const feedback = tooltip ?? addressButton.nextElementSibling;
+  const defaultMessage = feedback?.textContent ?? "";
   let resetMessage;
 
   addressButton.addEventListener("click", async () => {
@@ -55,13 +57,15 @@ document.querySelectorAll(".address-copy").forEach((addressButton) => {
 
     try {
       await copyText(address);
-      if (feedback) feedback.textContent = "Copied";
+      if (feedback) feedback.textContent = tooltip ? `Copied: ${address}` : "Copied";
     } catch {
-      if (feedback) feedback.textContent = "Copy failed";
+      if (feedback) feedback.textContent = tooltip ? `Copy failed: ${address}` : "Copy failed";
     }
 
+    if (tooltip) addressButton.classList.add("has-copy-feedback");
     resetMessage = window.setTimeout(() => {
-      if (feedback) feedback.textContent = "";
+      if (feedback) feedback.textContent = defaultMessage;
+      if (tooltip) addressButton.classList.remove("has-copy-feedback");
     }, 1800);
   });
 });

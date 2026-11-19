@@ -326,7 +326,8 @@ section,
   outline-offset: 3px;
 }
 
-.email-tooltip {
+.email-tooltip,
+.address-tooltip {
   position: absolute;
   bottom: calc(100% + 7px);
   left: 0;
@@ -347,11 +348,28 @@ section,
   pointer-events: none;
 }
 
+.profile-address-copy {
+  justify-self: start;
+  min-height: 32px;
+}
+
+.address-tooltip {
+  bottom: 100%;
+  left: 34px;
+}
+
 .email-copy:hover .email-tooltip,
 .email-copy:focus-visible .email-tooltip,
-.email-copy.is-copied .email-tooltip {
+.email-copy.is-copied .email-tooltip,
+.profile-address-copy:hover .address-tooltip,
+.profile-address-copy:focus-visible .address-tooltip,
+.profile-address-copy.has-copy-feedback .address-tooltip {
   visibility: visible;
   opacity: 1;
+}
+
+.profile-address-copy:hover .address-tooltip {
+  pointer-events: auto;
 }
 
 .main-column {
@@ -698,7 +716,8 @@ h3 {
     padding-bottom: 42px;
   }
 
-  .email-tooltip {
+  .email-tooltip,
+  .address-tooltip {
     right: 0;
     left: auto;
   }
