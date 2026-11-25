@@ -55,6 +55,7 @@
     "click-research": "Clicked Research",
     "click-teaching": "Clicked Teaching",
     "click-cv": "Clicked CV",
+    "click-outside-work": "Clicked Outside of work",
     "download-cv": "CV download clicked",
     "click-paper-jmp": "Clicked JMP"
   };
@@ -74,7 +75,7 @@
     }
   });
 
-  // One anonymous total per tab, shared by Home and CV. No visitor ID is added.
+  // One anonymous total per tab, shared across the site. No visitor ID is added.
   const timeKey = "site-viewing-time-v2";
   const expiry = 30 * 60 * 1000;
   const milestones = [30];
